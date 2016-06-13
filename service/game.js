@@ -23,7 +23,7 @@ function createDefaultInteraction() {
 		"Good, and you?",
 		"Pretty good, how 'bout you?",
 		"Doing good. Yourself?"
-	],
+	];
 
 	var reactions = [
 		"Good, thanks.",
@@ -72,36 +72,45 @@ function getSessionData(req) {
 
 		gameData.interaction = createDefaultInteraction();
 
+	}
+}
+
+function iterate(req) {
+
+	var gameData = req.session.gameData;
+
+	if (gameData.exchangeIdx < exchangeCount) {
+
+		// Iterate the exchange if we have not reached the end of the conversation
+		gameData.exchangeIdx ++;
+	} else if (gameData.interactionIdx < interactionCount) {
+
+		// Iterate the interaction if we have not reached the end of the round
+		gameData.interactionIdx ++;
+		gameData.exchangeIdx = 0;
+
+		if (gameData.roundIdx === 0) {
+			gameData.interaction = createDefaultInteraction();
+		}
+
 	} else {
 
-		if (gameData.exchangeIdx < exchangeCount) {
-
-			// Iterate the exchange if we have not reached the end of the conversation
-			gameData.exchangeIdx ++;
-		} else if (gameData.interactionIdx < interactionCount) {
-
-			// Iterate the interaction if we have not reached the end of the round
-			gameData.interactionIdx ++;
-			gameData.exchangeIdx = 0;
-
-			if (gameData.roundIdx === 0) {
-				gameData.interaction = createDefaultInteraction();
-			}
-
-		} else {
-
-			// Iterate the round if all interactions are done
-			gameData.roundIdx ++;
-			gameData.interactionIdx = 0;
-			gameData.exchangeIdx = 0;
-		}
+		// Iterate the round if all interactions are done
+		gameData.roundIdx ++;
+		gameData.interactionIdx = 0;
+		gameData.exchangeIdx = 0;
 	}
-};
+}
 
 var game = {
 
 	getSession: function(req, res, next) {
 		getSessionData(req);
+		res.status(200).json(req.session);
+	},
+
+	submitResponse: function(req, res, next) {
+		iterate(req);
 		res.status(200).json(req.session);
 	},
 

@@ -1,6 +1,14 @@
 <div class="container">
-	<h2>{{exchange}}</h2>
-	<div ng-repeat="option in options">
-		<p>{{option.response}}</p>
+	<div class="row">
+		<div class="col-md-12">
+			<h2>{{exchange}}</h2>
+			<div ng-repeat="option in options">
+				<form name="responseForm" ng-submit="gameCtrl.submitResponse()" novalidate>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-lg">{{option.response}}</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

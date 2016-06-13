@@ -23,17 +23,34 @@
 	}]);
 
 	app.controller('GameController', ['$scope', '$http', function($scope, $http) {
+
+		var ctrl = this;
+
+		this.applyData = function(data) {
+			var gameData = data.gameData;
+			var exchange = gameData.interaction.exchanges[gameData.exchangeIdx];
+			$scope.data = gameData;
+			$scope.exchange = exchange.text;
+			$scope.options = exchange.options;
+		}
+
 		$http.get('/api/game-session')
 			.success(function(data) {
-				var gameData = data.gameData;
-				var exchange = gameData.interaction.exchanges[gameData.exchangeIdx];
-				$scope.data = gameData;
-				$scope.exchange = exchange.text;
-				$scope.options = exchange.options;
+				ctrl.applyData(data);
 			})
 			.error(function(err) {
 				console.log('error: ' + err);
 			});
+
+		this.submitResponse = function() {
+			$http.get('/api/submit-response')
+				.success(function(data) {
+					ctrl.applyData(data);
+				})
+				.error(function(err) {
+					console.log('error: ' + err);
+				});
+		}
 	}]);
 
 })();
