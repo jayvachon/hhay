@@ -1,6 +1,6 @@
-<ul>
-	<li>Hi how are you?</li>
-	<li>Good how are you?</li>
-	<li>Good thanks</li>
-	<li>Begin conversation</li>
-</ul>
+<div class="container">
+	<h2>{{exchange}}</h2>
+	<div ng-repeat="option in options">
+		<p>{{option.response}}</p>
+	</div>
+</div>

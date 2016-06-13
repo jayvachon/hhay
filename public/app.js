@@ -22,11 +22,14 @@
 			.otherwise({ redirect: '/404' })
 	}]);
 
-	app.controller('GameController', ['$http', function($http) {
+	app.controller('GameController', ['$scope', '$http', function($scope, $http) {
 		$http.get('/api/game-session')
 			.success(function(data) {
-				console.log("GOT IT");
-				console.log(data);
+				var gameData = data.gameData;
+				var exchange = gameData.interaction.exchanges[gameData.exchangeIdx];
+				$scope.data = gameData;
+				$scope.exchange = exchange.text;
+				$scope.options = exchange.options;
 			})
 			.error(function(err) {
 				console.log('error: ' + err);
