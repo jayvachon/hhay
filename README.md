@@ -1,8 +1,12 @@
 Conversations in america typically begin with a familiar exchange:
 
 "Hi, how are you?"
+
 "I'm good, how are you?"
+
 "Good, thanks"
+
+< begin actual conversation >
 
 (and variations thereof)
 
