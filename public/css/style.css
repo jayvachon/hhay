@@ -1,0 +1,75 @@
+html, body {
+	height: 100%;
+	background-color: #fff;
+	/*background: url('/img/people/man.jpg');*/
+	background-size: cover;
+}
+
+.character {
+	margin-top: 60px;
+	font-size: 48px;
+	font-weight: bold;
+	color: #fff;
+}
+
+.btn-text {
+	background: none;
+	border: none;
+	font-size: 24px;
+}
+
+.btn-text:before {
+	content: '> ';
+}
+
+.response-option {
+	color: #fff;
+}
+
+.response-option:hover {
+	color: #ffff00;
+}
+
+.response-submit {
+	color: #aaa;
+}
+
+.response-submit:hover {
+	color: black;
+}
+
+.user-response {
+	color: #000;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@media (min-width: 768px) {
+	.user-response {
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+
+@media (max-width: 767px) {
+	.user-response { width: 100%; }
+	.user-response textarea { width: 96%; }
+}
+
+.user-response textarea {
+	height: 200px;
+	margin: 0 auto;
+}
+
+.info {
+	color: #aaa;
+	padding: 10px 0;
+	font-size: 18px;
+}
+
+.input-lg {
+	border-radius: 0;
+	box-shadow: none;
+}
