@@ -9,6 +9,7 @@ function useAngular (req, res, next) {
 exports = module.exports = function (app) {
 
 	app.get('/api/game-session', game.getSession);
+	app.get('/api/query-position', game.queryPosition);
 	app.post('/api/select-response', game.selectResponse);
 	app.post('/api/submit-response', game.submitResponse);
 

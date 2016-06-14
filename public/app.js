@@ -68,6 +68,16 @@
 
 		var userResponseForm = this;
 
+		$http.get('/api/query-position')
+			.success(function(data) {
+				var gameData = data.gameData;
+				if (gameData.roundIdx === 0 || gameData.interactionIdx > 0 || gameData.exchangeIdx > 0)
+					$location.path('/game');
+			})
+			.error(function(err) {
+				console.log(err);
+			});
+
 		this.submitResponse = function() {
 
 			$http.post('/api/submit-response', userResponseForm)

@@ -142,6 +142,10 @@ function addResponse(req, cb) {
 
 var game = {
 
+	queryPosition: function(req, res, next) {
+		res.status(200).json(req.session);
+	},
+
 	getSession: function(req, res, next) {
 		getSessionData(req, function() {
 			res.status(200).json(req.session);
