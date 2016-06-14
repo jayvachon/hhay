@@ -1,7 +1,7 @@
 html, body {
 	height: 100%;
 	background-color: #fff;
-	/*background: url('/img/people/man.jpg');*/
+	background: url('/img/people/man.jpg');
 	background-size: cover;
 }
 
@@ -16,26 +16,23 @@ html, body {
 	background: none;
 	border: none;
 	font-size: 24px;
+	font-style: italic;
 }
 
 .btn-text:before {
 	content: '> ';
 }
 
+.btn-text:hover {
+	font-style: normal;
+}
+
 .response-option {
 	color: #fff;
 }
 
-.response-option:hover {
-	color: #ffff00;
-}
-
 .response-submit {
 	color: #aaa;
-}
-
-.response-submit:hover {
-	color: black;
 }
 
 .user-response {
