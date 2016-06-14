@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var app = angular.module('salkr', [
+	var app = angular.module('hhay', [
 		'ngRoute'
 	]);
 

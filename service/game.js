@@ -63,7 +63,21 @@ function applyResponseOptions(req, interaction, cb) {
 	});
 }
 
-function getSessionData(req) {
+function generateInteraction(req, gameData, cb) {
+	gameData.interaction = createDefaultInteraction();
+	if (gameData.roundIdx > 0) {
+		applyResponseOptions(req, gameData.interaction, function(err) {
+			if (err) return console.log(err);
+			cb();
+		});
+	} else {
+		cb();
+	}
+}
+
+function getSessionData(req, cb) {
+
+	// Generate game data to start the round
 
 	var gameData = req.session.gameData;
 
@@ -75,13 +89,12 @@ function getSessionData(req) {
 			interactionIdx: 0,
 			exchangeIdx: 0
 		};
-
-		gameData.interaction = createDefaultInteraction();
-
 	}
+
+	generateInteraction(req, gameData, cb);
 }
 
-function iterate(req) {
+function iterate(req, cb) {
 
 	var gameData = req.session.gameData;
 
@@ -89,22 +102,13 @@ function iterate(req) {
 
 		// Iterate the exchange if we have not reached the end of the conversation
 		gameData.exchangeIdx ++;
+		cb();
 	} else if (gameData.interactionIdx < interactionCount) {
 
 		// Iterate the interaction if we have not reached the end of the round
 		gameData.interactionIdx ++;
 		gameData.exchangeIdx = 0;
-
-		gameData.interaction = createDefaultInteraction();
-		if (gameData.roundIdx > 0) {
-			applyResponseOptions(req, gameData.interaction, function(err) {
-
-				if (err)
-					return console.log(err);
-
-				console.log(gameData.interaction.exchanges[0]);
-			});
-		}
+		generateInteraction(req, gameData, cb);
 
 	} else {
 
@@ -112,6 +116,7 @@ function iterate(req) {
 		gameData.roundIdx ++;
 		gameData.interactionIdx = 0;
 		gameData.exchangeIdx = 0;
+		cb();
 	}
 }
 
@@ -122,7 +127,6 @@ function addResponse(req, cb) {
 	}, function(err, response) {
 		if (err)
 			return res.status(400).json({ 'error': err });
-		console.log(response);
 		cb(response);
 	});
 }
@@ -130,13 +134,15 @@ function addResponse(req, cb) {
 var game = {
 
 	getSession: function(req, res, next) {
-		getSessionData(req);
-		res.status(200).json(req.session);
+		getSessionData(req, function() {
+			res.status(200).json(req.session);
+		});
 	},
 
 	selectResponse: function(req, res, next) {
-		iterate(req);
-		res.status(200).json(req.session);
+		iterate(req, function() {
+			res.status(200).json(req.session);
+		});
 	},
 
 	submitResponse: function(req, res, next) {
