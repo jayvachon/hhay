@@ -58,7 +58,7 @@ function applyResponseOptions(req, interaction, cb) {
 
 		if (err) return cb(err);
 
-		interaction.exchanges[0].options.push(responses[0]);
+		interaction.exchanges[0].options.push(randomArrayValue(responses));
 		cb();
 	});
 }
@@ -120,6 +120,15 @@ function iterate(req, cb) {
 	}
 }
 
+function countResponse(req, cb) {
+
+	// Increment the click count for this user response
+	req.app.db.models.Response.update({ '_id': req.body._id }, { '$inc': { clickCount: 1 } }).exec(function(err, data) {
+		if (err) return cb(err);
+		cb();
+	});
+}
+
 function addResponse(req, cb) {
 	req.app.db.models.Response.create({
 		text: req.body.response,
@@ -140,14 +149,22 @@ var game = {
 	},
 
 	selectResponse: function(req, res, next) {
-		iterate(req, function() {
-			res.status(200).json(req.session);
+		countResponse(req, function() {
+			iterate(req, function() {
+				res.status(200).json(req.session);
+			});
 		});
 	},
 
 	submitResponse: function(req, res, next) {
 		addResponse(req, function(response) {
 			res.status(200).json(response);
+		});
+	},
+
+	restart: function(req, res, next) {
+		req.session.destroy(function(err) {
+			res.status(200).json({ status: 'success' });
 		});
 	},
 
@@ -158,6 +175,12 @@ var game = {
 					return console.log(err);
 				res.status(200).json({ status: 'success' });
 			});
+		});
+	},
+
+	print: function(req, res, next) {
+		req.app.db.models.Response.find({}).exec(function(err, responses) {
+			res.status(200).json(responses);
 		});
 	}
 };

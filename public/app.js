@@ -47,10 +47,10 @@
 				console.log('error: ' + err);
 			});
 
-		this.selectResponse = function() {
-			$http.get('/api/select-response')
+		this.selectResponse = function(option) {
+			$http.post('/api/select-response', option)
 				.success(function(data) {
-
+					
 					// If this is the beginning of the round, get the user's response
 					if (data.gameData.interactionIdx === 0 && data.gameData.exchangeIdx === 0) {
 						$location.path('/userResponse');
