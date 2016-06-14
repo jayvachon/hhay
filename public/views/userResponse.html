@@ -1,0 +1,15 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<form name="userResponseForm" ng-submit="userResponseForm.$valid && responseCtrl.submitResponse()" novalidate>
+				<div class="form-group">
+					<h3>How are feeling you today?</h3>
+					<p><i>Your answer is anonymous and will be shared with others</i></p>
+					<textarea type="text" class="form-control input-lg" ng-model="responseCtrl.response" placeholder="I'm good." required></textarea>
+					<br>
+					<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

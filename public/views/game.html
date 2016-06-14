@@ -3,9 +3,9 @@
 		<div class="col-md-12">
 			<h2>{{exchange}}</h2>
 			<div ng-repeat="option in options">
-				<form name="responseForm" ng-submit="gameCtrl.submitResponse()" novalidate>
+				<form name="responseForm" ng-submit="gameCtrl.selectResponse()" novalidate>
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-lg">{{option.response}}</button>
+						<button type="submit" class="btn btn-primary btn-lg">{{option.text}}</button>
 					</div>
 				</form>
 			</div>

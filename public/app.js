@@ -16,13 +16,18 @@
 				controller: 'GameController',
 				controllerAs: 'gameCtrl'
 			})
+			.when('/userResponse', {
+				templateUrl: 'views/userResponse.html',
+				controller: 'ResponseController',
+				controllerAs: 'responseCtrl'
+			})
 			.when('/404', {
 				templateUrl: 'views/404.html'
 			})
 			.otherwise({ redirect: '/404' })
 	}]);
 
-	app.controller('GameController', ['$scope', '$http', function($scope, $http) {
+	app.controller('GameController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
 		var ctrl = this;
 
@@ -42,10 +47,16 @@
 				console.log('error: ' + err);
 			});
 
-		this.submitResponse = function() {
-			$http.get('/api/submit-response')
+		this.selectResponse = function() {
+			$http.get('/api/select-response')
 				.success(function(data) {
-					ctrl.applyData(data);
+
+					// If this is the beginning of the round, get the user's response
+					if (data.gameData.interactionIdx === 0 && data.gameData.exchangeIdx === 0) {
+						$location.path('/userResponse');
+					} else {
+						ctrl.applyData(data);
+					}
 				})
 				.error(function(err) {
 					console.log('error: ' + err);
@@ -53,4 +64,19 @@
 		}
 	}]);
 
+	app.controller('ResponseController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+		var userResponseForm = this;
+
+		this.submitResponse = function() {
+
+			$http.post('/api/submit-response', userResponseForm)
+				.success(function(data) {
+					$location.path('/game');
+				})
+				.error(function(err) {
+					console.log('error: ' + err);
+				});
+		}
+	}]);
 })();

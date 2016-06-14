@@ -28,7 +28,7 @@ app.db.once('open', function () {
 });
 
 // configure data models
-require('./models')(app);
+require('./models')(app, mongoose);
 
 // settings
 app.disable('x-powered-by');

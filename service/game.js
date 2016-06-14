@@ -40,21 +40,27 @@ function createDefaultInteraction() {
 			{
 				text: randomArrayValue(intros),
 				'options': [
-					{
-						response: randomArrayValue(responses)
-					}
+					{ text: randomArrayValue(responses) }
 				]
 			},
 			{
 				text: randomArrayValue(reactions),
 				'options': [
-					{
-						response: 'Begin conversation'
-					}
+					{ text: 'Begin conversation' }
 				]
 			}
 		]
 	}
+}
+
+function applyResponseOptions(req, interaction, cb) {
+	req.app.db.models.Response.find({ 'round': req.session.gameData.roundIdx }).exec(function(err, responses) {
+
+		if (err) return cb(err);
+
+		interaction.exchanges[0].options.push(responses[0]);
+		cb();
+	});
 }
 
 function getSessionData(req) {
@@ -89,8 +95,15 @@ function iterate(req) {
 		gameData.interactionIdx ++;
 		gameData.exchangeIdx = 0;
 
-		if (gameData.roundIdx === 0) {
-			gameData.interaction = createDefaultInteraction();
+		gameData.interaction = createDefaultInteraction();
+		if (gameData.roundIdx > 0) {
+			applyResponseOptions(req, gameData.interaction, function(err) {
+
+				if (err)
+					return console.log(err);
+
+				console.log(gameData.interaction.exchanges[0]);
+			});
 		}
 
 	} else {
@@ -102,6 +115,18 @@ function iterate(req) {
 	}
 }
 
+function addResponse(req, cb) {
+	req.app.db.models.Response.create({
+		text: req.body.response,
+		round: req.session.gameData.roundIdx
+	}, function(err, response) {
+		if (err)
+			return res.status(400).json({ 'error': err });
+		console.log(response);
+		cb(response);
+	});
+}
+
 var game = {
 
 	getSession: function(req, res, next) {
@@ -109,14 +134,24 @@ var game = {
 		res.status(200).json(req.session);
 	},
 
-	submitResponse: function(req, res, next) {
+	selectResponse: function(req, res, next) {
 		iterate(req);
 		res.status(200).json(req.session);
 	},
 
+	submitResponse: function(req, res, next) {
+		addResponse(req, function(response) {
+			res.status(200).json(response);
+		});
+	},
+
 	reset: function(req, res, next) {
 		req.session.destroy(function(err) {
-			res.status(200).json({ status: 'success' });
+			req.app.db.models.Response.remove({}, function(err) {
+				if (err)
+					return console.log(err);
+				res.status(200).json({ status: 'success' });
+			});
 		});
 	}
 };
