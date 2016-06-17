@@ -3,7 +3,8 @@
 	'use strict';
 
 	var app = angular.module('hhay', [
-		'ngRoute'
+		'ngRoute',
+		'cloudinary'
 	]);
 
 	app.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
@@ -66,12 +67,14 @@
 
 	app.controller('ResponseController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
-		var userResponseForm = this;
+		var ctrl = this;
 
 		$http.get('/api/query-position')
 			.success(function(data) {
+
+				// Redirect if the player has not completed the round yet (prevent people from skipping to this part by editing the url)
 				var gameData = data.gameData;
-				if (gameData.roundIdx === 0 || gameData.interactionIdx > 0 || gameData.exchangeIdx > 0)
+				if (!gameData || gameData.roundIdx === 0 || gameData.interactionIdx > 0 || gameData.exchangeIdx > 0)
 					$location.path('/game');
 			})
 			.error(function(err) {
@@ -80,7 +83,7 @@
 
 		this.submitResponse = function() {
 
-			$http.post('/api/submit-response', userResponseForm)
+			$http.post('/api/submit-response', ctrl)
 				.success(function(data) {
 					$location.path('/game');
 				})
