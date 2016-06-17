@@ -38,13 +38,13 @@ function createDefaultInteraction() {
 	var characters = [
 		'boss_bdwvh0',
 		'cashier_tjihyj',
-		'doctor_gucieg',
+		'doctor',
 		'friend_fxid7p',
 		'grandmother_qfmxxb',
 		'nurse_j2ydjd',
 		'reading-girl_asbsho',
 		'receptionist_whqyzr',
-		'server2_pgsvrr',
+		'server2',
 		'server_cu66jc',
 	];
 

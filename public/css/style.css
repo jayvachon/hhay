@@ -25,11 +25,16 @@ html, body, div[ng-view], .container-fluid {
 }
 
 .btn-text:hover {
-	font-style: normal;
+	/*font-style: normal;*/
 }
 
 .response-option {
 	color: #fff;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.response-option:hover {
+	background-color: black;
 }
 
 .response-submit {
