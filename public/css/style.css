@@ -1,11 +1,8 @@
-html {
+html, body, div[ng-view], .container-fluid {
 	height: 100%;
 }
 
-body {
-	height: 100%;
-	background-color: #fff;
-	/*background: url('/img/people/man.jpg');*/
+.container-fluid {
 	background-size: cover;
 }
 

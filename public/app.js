@@ -1,5 +1,9 @@
 'use strict';
 
+function randomArrayValue(arr) {
+	return arr[Math.floor(Math.random() * arr.length)];
+}
+
 var app = angular.module('hhay', [
 	'ngRoute',
 	'cloudinary'
@@ -26,7 +30,7 @@ app.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($r
 		.otherwise({ redirect: '/404' })
 }]);
 
-app.controller('GameController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('GameController', ['$scope', '$http', '$location', 'cloudinary', function($scope, $http, $location, cloudinary) {
 
 	var ctrl = this;
 
@@ -36,6 +40,7 @@ app.controller('GameController', ['$scope', '$http', '$location', function($scop
 		$scope.data = gameData;
 		$scope.exchange = exchange.text;
 		$scope.options = exchange.options;
+		$scope.imgURL = "https://res.cloudinary.com/appleslerp/image/upload/hhay/" + gameData.interaction.character + ".jpg";
 	}
 
 	$http.get('/api/game-session')

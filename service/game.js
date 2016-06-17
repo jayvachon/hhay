@@ -35,7 +35,21 @@ function createDefaultInteraction() {
 		"I'm good. Thanks for asking."
 	];
 
+	var characters = [
+		'boss_bdwvh0',
+		'cashier_tjihyj',
+		'doctor_gucieg',
+		'friend_fxid7p',
+		'grandmother_qfmxxb',
+		'nurse_j2ydjd',
+		'reading-girl_asbsho',
+		'receptionist_whqyzr',
+		'server2_pgsvrr',
+		'server_cu66jc',
+	];
+
 	return {
+		character: randomArrayValue(characters),
 		exchanges: [
 			{
 				text: randomArrayValue(intros),
