@@ -10,6 +10,9 @@ var app = angular.module('hhay', [
 ]);
 
 app.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
+
+	$locationProvider.html5Mode(true);
+
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/main.html'
@@ -23,6 +26,9 @@ app.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($r
 			templateUrl: 'views/userResponse.html',
 			controller: 'ResponseController',
 			controllerAs: 'responseCtrl'
+		})
+		.when('/end', {
+			templateUrl: 'views/end.html'
 		})
 		.when('/404', {
 			templateUrl: 'views/404.html'

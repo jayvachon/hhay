@@ -3,7 +3,8 @@ html, body, div[ng-view], .container-fluid {
 }
 
 p, h1 {
-	font-weight: 100;
+	font-weight: 200;
+	font-family: Times New Roman;
 }
 
 .container-fluid {
@@ -36,7 +37,7 @@ p, h1 {
 
 .response-option {
 	color: #fff;
-	font-weight: 100;
+	font-weight: 200;
 	padding: 4px 16px;
 	background-color: rgba(0,0,0,0.5);
 }
@@ -47,7 +48,7 @@ p, h1 {
 
 .response-submit {
 	color: #aaa;
-	font-weight: 100;
+	font-weight: 200;
 }
 
 .user-response {
@@ -143,11 +144,14 @@ p, h1 {
 	border-color: transparent transparent;
 }
 
-.main-container {
-	text-align: center;
+.main-container.vertical-center {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+.main-container {
+	text-align: center;
 }
 
 @media (min-width: 768px) {
@@ -166,15 +170,26 @@ p, h1 {
 
 .main-container h1 {
 	font-size: 60px;
+	color: #000;
+}
+
+.main-container {
+	margin: 20px 0;
+	color: #777;
 }
 
 .main-container p {
 	font-size: 24px;
-	margin: 20px 0;
+	line-height: 1.75;
+	padding: 5px 0;
+}
+
+.main-container.vertical-center p {
+	font-size: 24px;
 }
 
 .main-container a {
 	color: #aaa;
 	font-size: 24px;
-	font-weight: 100;
+	font-weight: 200;
 }
