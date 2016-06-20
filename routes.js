@@ -15,8 +15,8 @@ exports = module.exports = function (app) {
 
 	// Development
 	app.get('/api/reset', game.reset);
-	app.get('/api/restart', game.restart);
 	app.get('/api/print', game.print);
+	app.post('/api/restart', game.restart);
 
 	app.get('/', useAngular);
 

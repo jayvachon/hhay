@@ -182,7 +182,8 @@ var game = {
 
 	restart: function(req, res, next) {
 		req.session.destroy(function(err) {
-			res.status(200).json({ status: 'success' });
+			res.status(200).json(req.session);
+			console.log(req.session);
 		});
 	},
 

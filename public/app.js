@@ -66,6 +66,23 @@ app.controller('GameController', ['$scope', '$http', '$location', 'cloudinary', 
 				console.log('error: ' + err);
 			});
 	}
+
+	this.restart = function() {
+		$http.post('/api/restart')
+			.success(function(data) {
+				$location.path('/game');
+				$http.get('/api/game-session')
+					.success(function(data) {
+						ctrl.applyData(data);
+					})
+					.error(function(err) {
+						console.log('error: ' + err);
+					});
+			})
+			.error(function(err) {
+				console.log("error: " + err);
+			});
+	}
 }]);
 
 app.controller('ResponseController', ['$scope', '$http', '$location', function($scope, $http, $location) {
