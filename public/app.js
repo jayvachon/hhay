@@ -76,10 +76,9 @@ app.controller('GameController', ['$scope', '$http', '$location', 'cloudinary', 
 	this.restart = function() {
 		$http.post('/api/restart')
 			.success(function(data) {
-				$location.path('/game');
 				$http.get('/api/game-session')
 					.success(function(data) {
-						ctrl.applyData(data);
+						$location.path('/end');
 					})
 					.error(function(err) {
 						console.log('error: ' + err);

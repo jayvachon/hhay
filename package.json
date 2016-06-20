@@ -1,10 +1,14 @@
 {
   "name": "hhay",
   "version": "1.0.0",
-  "description": "",
+  "description": "A game about the 'Hi, how are you?' phenomenon in America.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/jayvachon/hhay.git"
   },
   "author": "appleslerp",
   "license": "ISC",
